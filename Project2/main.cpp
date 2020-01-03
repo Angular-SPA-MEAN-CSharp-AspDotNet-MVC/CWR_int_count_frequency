@@ -14,7 +14,7 @@ void display(char *ary, int size) {
 void displayPair(vector<pair<char, int>> *pairResult, int size) {
 	cout << endl;
 	for (int i = 0; i < size; i++){
-		cout << ((pairResult)->_Myfirst)[i].first << "  " << ((pairResult)->_Myfirst)[i].second;
+		cout << ((pairResult)->_Myfirst)[i].first << " --- " << ((pairResult)->_Myfirst)[i].second;
 		cout << endl;
 	}
 	cout << endl;	
@@ -27,8 +27,8 @@ void countProcess(char ary[], int size){
 		return;
 	}
 
-	int cnt = 1, startIdx = 0;
-	for (int i = startIdx+1; i < size; i++){
+	int cnt = 0, startIdx = 0;
+	for (int i = 0; i < size; i++){
 		if (ary[startIdx] == ary[i]){
 			cnt++;
 		}
@@ -44,21 +44,60 @@ void countProcess(char ary[], int size){
 	displayPair(&result, result.size());
 }
 
+// to return the first different item index, using "binary search". O(N)
+int findNextDiffItemIdx(char ary[], int size, int startIdx){
+	int endIdx = size - 1;
+	while (startIdx < endIdx){
+		if (ary[startIdx] == ary[endIdx]){
+			startIdx = endIdx;
+			endIdx = size - 1;
+		}
+		else{
+			endIdx = (startIdx + endIdx) / 2; // binary search idea applied here
+		}
+	}
+	return endIdx;
+}
+
+void countFastProcess(char ary[], int size){
+	vector<pair<char, int>> result;
+
+	if (ary == nullptr || size == 0){
+		return;
+	}
+
+	int cnt, endIdx, startIdx = 0;
+
+	while (startIdx < size){
+		endIdx = findNextDiffItemIdx(ary, size, startIdx); 
+		cnt = endIdx - startIdx + 1;
+		result.push_back(make_pair(ary[startIdx], cnt));
+		startIdx = endIdx+1;
+	}
+
+	displayPair(&result, result.size());
+}
 
 int main() {
 	int size;
-	char ipt[] = "abbdddffffffvvvx";
+	char ipt[] = "abbbbbdhhhp";
 	cout << "Please enter the array. \n";
-	//size = sizeof(ipt) / sizeof(*ipt)-1;
 	size = strlen(ipt);
+	cout << endl;
 
 	cout << "The initial array is: \n";
 	display(ipt, size);
+	cout << endl;
 
-	cout << "\n The count reult is below:";
+	cout << "\nThe count reult is below, value -- frequency :";
 	countProcess(ipt, size);
+	cout << endl;
 
-	cout << "Press any key to exit this console application.";
+	cout << "\nThe fast count reult is below, value -- frequency :";
+	countFastProcess(ipt, size);
+	cout << endl;
+
+	cout << "\nPress any key to exit this console application.";
 	cin.ignore();
 	return 1; // An non-zero value indicates the app succeeds.
 }
