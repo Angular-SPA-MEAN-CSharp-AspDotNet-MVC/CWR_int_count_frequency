@@ -1,4 +1,4 @@
-# The project, CWR_int_count_frequency, is used to solve the following questions. Also it can be executed in Visual Studio 2013 Ultimate version. 
+# This repo is developed in Visual Studio 2013 Ultimate version. The quesion and brielf explanation are below: 
 
 Question:
 
