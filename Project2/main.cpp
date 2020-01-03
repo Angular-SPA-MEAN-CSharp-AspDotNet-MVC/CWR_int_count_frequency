@@ -107,7 +107,7 @@ int main() {
 	string testStr = generateTestingStr();
 
 	cout << "\nPlease make the selection below: \n";
-	cout << "\nEnter 0 to use the quesion provided string. \nEnter anything else will use a random testing: \n";
+	cout << "\nEnter 0 to use the quesion provided string. \nEnter anything else will use a random testing string: \n";
 	char *ipt;
 	cin >> iptVal;
 	if (iptVal == 0){
