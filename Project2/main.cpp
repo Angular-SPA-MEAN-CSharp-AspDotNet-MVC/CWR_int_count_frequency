@@ -11,30 +11,51 @@ void display(char *ary, int size) {
 	cout << endl;
 }
 
-void displayPair(vector<pair<int, int>> *pairResult, int size) {
+void displayPair(vector<pair<char, int>> *pairResult, int size) {
+	cout << endl;
 	for (int i = 0; i < size; i++){
-		cout << (((pairResult[0])._Myfirst)[0]).first << "  " << (((pairResult[0])._Myfirst)[0]).second;
+		cout << ((pairResult)->_Myfirst)[i].first << "  " << ((pairResult)->_Myfirst)[i].second;
+		cout << endl;
 	}
 	cout << endl;	
 }
 
-void countProcess(char *ary = nullptr, int size = 0){
-	vector<pair<int, int>> result;
-	result.push_back(make_pair(3, 5));
+void countProcess(char ary[], int size){
+	vector<pair<char, int>> result;
 
-	displayPair(&result, 1);
+	if (ary == nullptr || size == 0){
+		return;
+	}
+
+	int cnt = 1, startIdx = 0;
+	for (int i = startIdx+1; i < size; i++){
+		if (ary[startIdx] == ary[i]){
+			cnt++;
+		}
+		else{
+			result.push_back(make_pair(ary[startIdx], cnt));
+			cnt = 1;
+			startIdx = i;
+		}
+		if (i == (size - 1)){
+			result.push_back(make_pair(ary[startIdx], cnt));
+		}
+	}
+	displayPair(&result, result.size());
 }
+
 
 int main() {
 	int size;
-	char ipt[] = { 'a', 'b', 'b', 'v', 'v', 'v' };
+	char ipt[] = "abbdddffffffvvvx";
 	cout << "Please enter the array. \n";
-	size = sizeof(ipt) / sizeof(*ipt);
+	//size = sizeof(ipt) / sizeof(*ipt)-1;
+	size = strlen(ipt);
 
 	cout << "The initial array is: \n";
 	display(ipt, size);
 
-	cout << "\n Input the array to process";
+	cout << "\n The count reult is below:";
 	countProcess(ipt, size);
 
 	cout << "Press any key to exit this console application.";
